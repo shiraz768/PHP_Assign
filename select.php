@@ -39,7 +39,7 @@ foreach($res as $data ){
         <td><?php echo $data['maths']?></td>
         <td><?php echo $data['physics']?></td>
         <td><?php echo $data['chemistry']?></td>
-        <td><?php echo $data['obtained_marks']?></td>
+        <td><?php echo $data['marks_obtained']?></td>
         <td><?php echo $data['total_marks']?></td>
         <td><?php echo $data['persentage']?></td>
         <td><?php echo $data['grade']?></td>

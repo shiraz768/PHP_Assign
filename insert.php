@@ -1,24 +1,28 @@
 <?php
 include("connection.php")
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <style>
-    th,td{
+    th,
+    td {
         text-align: center;
     }
     
+    label{
+        font-weight: bold;
+    }
 </style>
 
 <body>
+<div class="container"><h1 class="bg-info text-white">Insert Table Row</h1></div>
     <div class="container">
         <form action="" method="post" class="form-group">
             <label for="">Name</label>
@@ -40,7 +44,7 @@ include("connection.php")
     </div>
     <div class="container m-5" id="viewbtn">
         <form action="" method="post">
-        <button type="submit" class="btn btn-primary mr-auto" name="view">View</button>
+            <button type="submit" class="btn btn-primary mr-auto" name="view">View</button>
         </form>
     </div>
 
@@ -50,7 +54,7 @@ include("connection.php")
         $eng = $_POST['english'];
         $urdu = $_POST["urdu"];
         $maths = $_POST["maths"];
-        $physics = $_POST["physics"];  
+        $physics = $_POST["physics"];
         $chem = $_POST["chemistry"];
         $total_marks = 500;
         $obtained_marks = ($eng + $urdu + $maths + $physics + $chem);
@@ -73,8 +77,8 @@ include("connection.php")
             $grade = "D";
             $remarks = "Improve Yourself";
         }
-        $query1 = $pdo->prepare("insert into marksheet(name,english,urdu,maths,physics,chemistry,marks_obtained,total_marks,persentage,grade,remarks) values
-     (:stdname,:stdeng,:stdurdu,:stdmaths,:stdphysics,:stdchem,:stdob_marks,:stdtotal_marks,:stdpersentage,:stdgrade,:stdremarks)");
+        $query1 = $pdo->prepare("insert into marksheet(name,english,urdu,maths,physics,chemistry,marks_obtained,total_marks,percentage,grade,remarks) values
+     (:stdname,:stdeng,:stdurdu,:stdmaths,:stdphysics,:stdchem,:stdob_marks,:stdtotal_marks,:stdpercentage,:stdgrade,:stdremarks)");
         $query1->bindParam('stdname', $name);
         $query1->bindParam('stdeng', $eng);
         $query1->bindParam('stdurdu', $urdu);
@@ -83,69 +87,77 @@ include("connection.php")
         $query1->bindParam('stdchem', $chem);
         $query1->bindParam('stdob_marks', $obtained_marks);
         $query1->bindParam('stdtotal_marks', $total_marks);
-        $query1->bindParam('stdpersentage', $percentage);
+        $query1->bindParam('stdpercentage', $percentage);
         $query1->bindParam('stdgrade', $grade);
         $query1->bindParam('stdremarks', $remarks);
         $query1->execute();
         echo "<script>alert('data stored')</script>";
-    }?>
+    } ?>
 
 
 
 
-    
+
     <table class="table table-dark text-white"><?php
-    if(isset($_POST["view"])){?>
-       
-        <thead>
-            <tr>
-            <th scope="col">id</th>
-            <th scope="col">name</th>
-            <th scope="col">english</th>
-            <th scope="col">urdu</th>
-            <th scope="col">maths</th>
-            <th scope="col">physics</th>
-            <th scope="col">chemistry</th>
-            <th scope="col">Obtained Marks</th>
-            <th scope="col">Total_marks</th>
-            <th scope="col">Percentage</th>
-            <th scope="col">Grade</th>
-            <th scope="col">Remarks</th>
-            </tr>
-        </thead>
-   
-    <?php 
-     $query = $pdo->query("select * from marksheet");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-foreach($res as $data ){
-    ?>
-    <tbody>
-    <tr>
-        <td><?php echo $data['id']?></td>
-        <td><?php echo $data['name']?></td>
-        <td><?php echo $data['english']?></td>
-        <td><?php echo $data['urdu']?></td>
-        <td><?php echo $data['maths']?></td>
-        <td><?php echo $data['physics']?></td>
-        <td><?php echo $data['chemistry']?></td>
-        <td><?php echo $data['marks_obtained']?></td>
-        <td><?php echo $data['total_marks']?></td>
-        <td><?php echo $data['persentage']?></td>
-        <td><?php echo $data['grade']?></td>
-        <td><?php echo $data['remarks']?></td>
-    </tr>
-    </tbody>
-    
-    <?php
-}
-    
-   
-    
-    }
-   
+                                                if (isset($_POST["view"])) { ?>
 
-?>
- </table>
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col">english</th>
+                    <th scope="col">urdu</th>
+                    <th scope="col">maths</th>
+                    <th scope="col">physics</th>
+                    <th scope="col">chemistry</th>
+                    <th scope="col">Obtained Marks</th>
+                    <th scope="col">Total_marks</th>
+                    <th scope="col">Percentage</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+
+            <?php
+                                                    $query = $pdo->query("select * from marksheet");
+                                                    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+                                                    foreach ($res as $data) {
+            ?>
+                <tbody>
+                    <tr>
+                        <td><?php echo $data['id'] ?></td>
+                        <td><?php echo $data['name'] ?></td>
+                        <td><?php echo $data['english'] ?></td>
+                        <td><?php echo $data['urdu'] ?></td>
+                        <td><?php echo $data['maths'] ?></td>
+                        <td><?php echo $data['physics'] ?></td>
+                        <td><?php echo $data['chemistry'] ?></td>
+                        <td><?php echo $data['marks_obtained'] ?></td>
+                        <td><?php echo $data['total_marks'] ?></td>
+                        <td><?php echo $data['percentage'] ?></td>
+                        <td><?php echo $data['grade'] ?></td>
+                        <td><?php echo $data['remarks'] ?></td>
+                        
+                            <td><button type="button" value="UPDATE" class="bg-success"><a href="update.php?id=<?php echo $data['id'] ?>" class="btn btn-success text-white">UPDATE</a></button></td>
+                       
+                            <td><button type="button" value="delete" name="delete" class="bg-danger"><a href="delete.php?id=<?php echo $data['id'] ?>"  class="btn btn-danger">DELETE</a></button></td>
+                       
+                    </tr>
+                </tbody>
+
+        <?php
+
+        
+                                                    }
+                                                }
+                                               
+                                                
+
+
+        ?>
+    </table>
 </body>
 
 </html>

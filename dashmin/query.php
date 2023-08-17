@@ -12,15 +12,26 @@ if(isset($_POST['cat_add'])){
     $destination='img/'.$filename;
     if($extension=="jpg" || $extension == "png" || $extension =="jpeg"){
 if(move_uploaded_file($file_tmp_name,$destination)){
+    $checkcat = $pdo->prepare("select * from category where name=:cname");
+    $checkcat->bindParam('cname',$cname);
+    $checkcat->execute();
+  
+    $count = $checkcat->rowCount();
+   
+    if($count > 0){
+        echo "<script>alert('category existed')</script>";
+    }
+    else{
     $query= $pdo->prepare("insert into category (name,image) values (:pname,:pimg)");
     $query->bindParam("pname",$cname);
     $query->bindParam("pimg",$filename);
     $query->execute();
-    echo"
+    echo "
     <script>
     alert('category added succesfully')
     </script>
     ";
+    }
 }
 else{
     echo"

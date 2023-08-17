@@ -4,14 +4,14 @@ include("header.php");
 
 ?>
  <div class="container p-4">
-                            <h6 class="mb-4">view category</h6>
+                            <h6 class="display-4 text-info text-center">view category</h6>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">id</th>
-                                        <th scope="col">name</th>
-                                        <th scope="col">image</th>
-                                        <th scope="col" colspan="2">action</th>
+                                        <th scope="col"  class="text-center">id</th>
+                                        <th scope="col"  class="text-center">name</th>
+                                        <th scope="col"  class="text-center">image</th>
+                                        <th scope="col" colspan="2" class="text-center">action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -21,16 +21,16 @@ include("header.php");
                                     foreach($data as $cat){
                                         ?>
                                     <tr>
-                                        <th scope="row"><?php echo $cat['id'];?></th>
-                                        <td><?php echo $cat['name'];?></td>
-                                        <td><img src="img/<?php echo $cat['image'];?>" width="100px"></td>
-                                        <td>
+                                        <th scope="row"  class="text-center"><?php echo $cat['id'];?></th>
+                                        <td  class="text-center"><?php echo $cat['name'];?></td>
+                                        <td  class="text-center"><img src=<?php echo "img/". $cat['image'];?> width="100px" ></td>
+                                        <td  class="text-center">
                                             <form action="" method="get">
                                             <button type="button" class="btn btn-outline-success m-2"><a href="update.php?cid=<?php echo $cat['id']?>" class="text-dark"> Edit</a></button>
 
                                             </form>
                                         </td> 
-                                        <td>
+                                        <td  class="text-center">
                                       <form action="" method="get">
                                       <button type="button" class="btn btn-outline-danger m-2"><a href="?cid=<?php echo $cat["id"];?>" class="text-dark">Delete</a></button>
                                       </form>
@@ -45,7 +45,7 @@ include("header.php");
                                         $query->execute();
                                         echo "<script>
                                         alert('delete category successfully');
-                                location.assign('catview.php');
+                                location.assign('view_cat.php');
                                         </script>";
                                     }
                                     ?>

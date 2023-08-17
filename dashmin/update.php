@@ -37,6 +37,7 @@ include("header.php");
                             }
 
                             if(isset($_POST["update_cat"])){
+                                if(!empty($_FILES["cat_file"]["name"])){
                                 $cname= $_POST["cat_name"];
                                 $filename = $_FILES["cat_file"]["name"];
                                 $tmpname= $_FILES["cat_file"]['tmp_name'];
@@ -54,6 +55,7 @@ if(move_uploaded_file($tmpname,$destination)){
     ";
 
 }
+
                                 }
                             }
                             ?>

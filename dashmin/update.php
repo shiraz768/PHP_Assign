@@ -12,7 +12,7 @@ include("header.php");
                             <?php
                             if(isset($_GET["cid"])){
                                 $cid = $_GET['cid'];
-                                $query= $pdo->prepare("select * from category where id =:pid");
+                                $query= $pdo->prepare("select * from cat where id =:pid");
                                 $query->bindParam("pid",$cid);
                                 $query->execute();
                                 $data = $query->fetch(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ include("header.php");
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">image</label>
                                     <input type="file" class="form-control" name="cat_file" id="exampleInputPassword1">
-                                <img src="img/<?php echo $data['image'];?>" width="100px" alt="">
+                                <img src="<?php echo "/img".$data['image'];?>" width="100px" alt="">
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="update_cat">update category</button>
                             </form>
@@ -37,27 +37,37 @@ include("header.php");
                             }
 
                             if(isset($_POST["update_cat"])){
-                                if(!empty($_FILES["cat_file"]["name"])){
                                 $cname= $_POST["cat_name"];
+                                if(!empty($_FILES["cat_file"]["name"])){
                                 $filename = $_FILES["cat_file"]["name"];
                                 $tmpname= $_FILES["cat_file"]['tmp_name'];
                                 $extension = pathinfo($filename,PATHINFO_EXTENSION);
                                 $destination = "img/" . $filename;
                                 if($extension=="jpg" || $extension=="png" ||$extension=="jpeg" || $extension=="webp" ){
 if(move_uploaded_file($tmpname,$destination)){
-    $query=$pdo->prepare("update category  set name =:cname, image=:cimg where id =:pid");
+    $query=$pdo->prepare("update cat  set name =:cname, image=:cimg where id =:pid");
     $query->bindParam("pid",$cid);
     $query->bindParam("cname",$cname);
     $query->bindParam("cimg",$filename);
     $query->execute();
     echo "
-    <script>alert('update category successfully')</script>
+    <script>alert('update cat successfully with image')</script>
     ";
 
 }
 
                                 }
+                            }else{
+                                $query=$pdo->prepare("update cat  set name =:cname where id =:pid");
+                                $query->bindParam("pid",$cid);
+                                $query->bindParam("cname",$cname);
+                                $query->execute();
+                                echo "
+                                <script>alert('update cat successfully without image')</script>
+                                "; 
                             }
+
+                        }
                             ?>
         </div>
             <!-- Blank End -->
